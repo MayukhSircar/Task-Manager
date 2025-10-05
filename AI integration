@@ -1,0 +1,77 @@
+AI Integration Documentation
+This document outlines the methodology and specific prompts used with an AI assistant (Google's Gemini) during the development of the Task Manager application. The AI was leveraged as a pair programmer for brainstorming, code generation, debugging, and documentation.
+
+Methodology
+The development process followed a conversational, iterative approach with the AI.
+
+Initial Scaffolding: Broad prompts were used to generate the initial HTML structure and Firebase integration code.
+
+Feature Implementation: Specific, context-aware prompts were used to build individual features like CRUD operations, filtering, and dark mode.
+
+Debugging: Error messages from the browser console were provided directly to the AI to get targeted fixes.
+
+Refinement & Documentation: Prompts were used to refactor the code for clarity and to generate technical documentation like this file and the architecture overview.
+
+Sample Prompts Used
+Prompt 1: Initial Project Scaffolding
+Context: At the beginning of the project, I needed a simple, single-file HTML application with Firebase authentication and Firestore integration.
+
+Prompt:
+
+"Create a complete, single-file index.html web application for a simple Task Manager. Use Tailwind CSS for styling. The app should include basic email/password authentication using Firebase Auth and use Firestore to store tasks. Include a login screen and a main app view that is hidden until the user logs in."
+
+Result: The AI provided the initial HTML structure, the Firebase SDK import statements, and the core JavaScript logic for handling the onAuthStateChanged listener to toggle between the login and main app views.
+
+Prompt 2: Implementing CRUD Operations
+Context: After the basic structure was in place, I needed the core logic to create, read, update, and delete tasks from Firestore.
+
+Prompt:
+
+"Using the previous code, add the JavaScript functions for full CRUD functionality on a 'tasks' collection in Firestore. Each task should be stored in a subcollection under the logged-in user's UID for security. Create a modal form to add and edit tasks with fields for title, priority (Low, Medium, High), and a due date."
+
+Result: The AI generated the addDoc, getDocs, updateDoc, and deleteDoc functions, along with the JavaScript to show/hide and populate the modal form.
+
+Prompt 3: Adding Bonus Features (Search & Sort)
+Context: The base functionality was working, but I wanted to add the bonus features of searching and sorting as required by the assignment.
+
+Prompt:
+
+"Enhance the app by adding a search bar and a sort dropdown. The search should filter tasks by title in real-time. The sort dropdown should allow sorting by 'Newest First' and 'Due Date'. Also, implement debouncing on the search input to avoid excessive Firestore reads."
+
+Result: The AI updated the fetchTasks function to dynamically add where and orderBy clauses to the Firestore query. It also provided the setTimeout logic for debouncing the search input.
+
+Prompt 4: Debugging the Firestore Index Error
+Context: When I combined a filter and a sort, the application failed and the browser console showed a Firestore error.
+
+Prompt:
+
+"My app is showing this error in the console when I try to search and sort at the same time: 'FirebaseError: The query requires an index...'. Explain what this means and how to fix it."
+
+Result: The AI correctly identified this as a missing composite index issue in Firestore. It explained that complex queries require a manually created index and provided step-by-step instructions on how to click the link in the error message to automatically create the required index in the Firebase console.
+
+Prompt 5: Adding Advanced UI Features
+Context: The application was functional, but I wanted to improve the user experience with a more polished interface and additional features.
+
+Prompt:
+
+"I want to make my Task Manager app look better and add more functionalities. Please add a dark mode toggle that saves the user's preference in local storage. Also, add a real-time search bar and a loading spinner that shows when tasks are being fetched. Finally, replace the default browser confirm dialog with a custom, better-looking modal for delete confirmations."
+
+Result: The AI generated the necessary CSS for the dark mode theme, the HTML for the new UI elements (toggle, spinner, modal), and the JavaScript logic to handle theme switching, debounced search, and the custom confirmation flow.
+
+Prompt 6: Debugging a JavaScript Reference Error
+Context: After adding the new UI features, I encountered a new error in the console that was breaking the application.
+
+Prompt:
+
+"My app is now showing this error: ReferenceError: Cannot access 'updatePaginationButtons' before initialization. Explain why this is happening and fix the code."
+
+Result: The AI explained that the error was due to the order of function definitions in JavaScript. It correctly identified that the fetchTasks function was trying to call updatePaginationButtons before it was defined. The AI then provided the corrected code with the function definitions reordered to solve the issue.
+
+Prompt 7: Generating Architecture Documentation
+Context: For the submission, I needed to create a technical architecture document for my final application.
+
+Prompt:
+
+"Generate a professional architecture.md file for my Task Manager application. The app uses a single HTML file with Vanilla JS and Firebase (Auth and Firestore). Describe the high-level architecture, the technology stack, and the Firestore database schema, including the structure of a 'task' document and an explanation of the calculated field."
+
+Result: The AI generated a complete, well-structured architecture.md file that accurately described the project and could be used directly for my submission.
