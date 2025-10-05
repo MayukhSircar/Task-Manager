@@ -1,0 +1,72 @@
+Architecture Documentation - Task Manager App
+1. Overview
+This document outlines the architecture for the Task Manager, a single-page web application built for the AI Campus Assignment. The application allows users to manage a personal to-do list with features including authentication, full CRUD operations for tasks, filtering, sorting, pagination, and real-time search.
+
+The architecture is designed to be simple, serverless, and scalable, leveraging modern web technologies and a Backend-as-a-Service (BaaS) platform to enable rapid development by a single engineer.
+
+2. Technology Stack
+Frontend: HTML5, Tailwind CSS, Vanilla JavaScript (ES6 Modules)
+
+Backend & Database: Google Firebase (Authentication and Cloud Firestore)
+
+Deployment: Render (Static Site Hosting)
+
+3. High-Level Architecture
+The application follows a two-tier, client-server architecture. The client is a "fat client" containing all the UI and business logic, and the backend is a "thin" BaaS provider (Firebase) that only handles data storage, authentication, and security rules. This serverless approach was chosen for its simplicity and scalability, eliminating the need to manage a backend server.
+
+Components:
+Single-Page Application (SPA): A single index.html file that runs entirely in the user's browser. It is responsible for:
+
+Rendering the entire user interface.
+
+Managing all application state (e.g., which user is logged in, current filter settings).
+
+Handling all user interactions (form submissions, button clicks).
+
+Communicating directly with Firebase services via the official Firebase JavaScript SDK.
+
+Firebase Services:
+
+Firebase Authentication: Manages user signup and login with email and password. It securely handles user sessions and provides the unique User ID (uid) used for data segregation.
+
+Cloud Firestore: A NoSQL document database used to store all task data. The database is structured to ensure that a user's data is private and can only be accessed by them.
+
+4. Database Schema (Cloud Firestore)
+The database schema is designed for security and query efficiency. The core principle is that each user's data is stored in a separate subcollection tied to their unique user ID.
+
+Collection Structure:
+A top-level collection named users.
+
+Each document in the users collection is identified by a user's unique uid (provided by Firebase Auth).
+
+Each user document contains a subcollection named tasks, which holds all the tasks for that specific user.
+
+This structure (/users/{userId}/tasks/{taskId}) ensures perfect data privacy through Firestore Security Rules, as a user can only ever query the tasks subcollection within their own document.
+
+task Document Schema:
+A single document in the tasks subcollection has the following fields, fulfilling all the assignment's requirements:
+
+Field Name         Type          Description                                                                                  Required Fields Met
+
+title              String        The main description of the task.                                                            ✅ Text field
+
+title_lowercase    String        A lowercase version of the title, created to enable case-insensitive search queries.          -
+
+priority           String        The task's priority level.                                                                   ✅ Enum ("Low", "Medium", "High")
+
+completed          Boolean       true if the task is completed, otherwise false.                                              ✅ Boolean field
+
+dueDate            String        The date the task is due (e.g., "2025-10-15").                                                -
+
+createdAt          String        An ISO 8601 timestamp for when the task was created. Used for sorting.                        -
+
+userId             String        The uid of the user who owns this task. Used for security rules.                              -
+
+Calculated Field:
+The assignment requires one calculated field derived from two or more inputs. This is implemented on the frontend when each task is rendered in the list.
+
+Field Name: timeUntilDueText (displayed in the UI).
+
+Inputs: completed (Boolean) and dueDate (String).
+
+Logic: The JavaScript code calculates the difference between today's date and the dueDate. Based on this difference and whether the task is already completed, it displays a dynamic, human-readable string like "Completed," "Overdue by 5 days," "Due today," or "Due in 3
