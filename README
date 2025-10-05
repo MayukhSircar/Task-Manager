@@ -1,0 +1,38 @@
+Task Manager - AI Campus Assignment
+This is a full-featured, serverless web application for managing personal tasks, built as a submission for the AI Campus Assignment. The application is built from scratch using foundational web technologies and leverages Firebase for backend services.
+
+Live Demo Link: https://task-manager-7c8a.onrender.com
+
+Features
+This application implements all the core and bonus features required by the assignment:
+
+🔐 Authentication: Secure user sign-up and login functionality using email and password.
+
+📝 Full CRUD Operations: Users can Create, Read, Update, and Delete their own personal tasks.
+
+📊 Data Management:
+
+Pagination: The task list is paginated to show a limited number of items per page.
+
+Filtering: Tasks can be filtered by their priority level (Low, Medium, High).
+
+Sorting: Tasks can be sorted by creation date, due date, or priority.
+
+Search: A real-time, case-insensitive search to filter tasks by title.
+
+** calculated Field:** Each task displays a dynamic timeUntilDue status (e.g., "Overdue," "Due today," "Due in 5 days") which is calculated from the dueDate and completed status.
+
+✨ Modern UI:
+
+A clean and responsive interface built with Tailwind CSS.
+
+Dark Mode with a toggle to switch themes.
+
+Loading indicators and custom modals for a smooth user experience.
+
+Technology Stack
+Frontend: HTML, Tailwind CSS, Vanilla JavaScript (ES6 Modules)
+
+Backend & Database: Google Firebase (Authentication & Cloud Firestore)
+
+Deployment: Render (Static Site Hosting)
